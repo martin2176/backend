@@ -43,7 +43,7 @@ public class BackendController {
 
 		log.info("Zip returned from database :: {}", zip);
 
-		final String uri = apiUrl + "/data/2.5/weather?zip=" + zip + "," + apiKey + URL_PARAM;
+		final String uri = apiUrl + "/data/2.5/weather?zip=" + zip + "," + "US&appid=" + apiKey + URL_PARAM;
 
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, null,
 				new ParameterizedTypeReference<String>() {
