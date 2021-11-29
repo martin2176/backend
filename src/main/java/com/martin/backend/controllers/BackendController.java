@@ -28,8 +28,15 @@ public class BackendController {
 
 	@Value("${APIKEY}")
 	String apiKey;
-
-	private final String URL_PARAM = "&units=imperial";
+	
+	@Value("${api.url.param}")
+	String URL_PARAM;
+	
+	@Value("${api.url.context}")
+	String URL_CONTEXT;
+	
+	@Value("${api.url.apikey.prefix}")
+	String URL_API_KEY_PREFIX;
 
 	/**
 	 * GET REST call Requests zipcode entry from database Finalizes full apiUrl with
@@ -43,7 +50,9 @@ public class BackendController {
 
 		log.info("Zip returned from database :: {}", zip);
 
-		final String uri = apiUrl + "/data/2.5/weather?zip=" + zip + "," + "US&appid=" + apiKey + URL_PARAM;
+		final String uri = apiUrl + URL_CONTEXT + zip + "," + URL_API_KEY_PREFIX + apiKey + URL_PARAM;
+		
+		log.info(uri);
 
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, null,
 				new ParameterizedTypeReference<String>() {

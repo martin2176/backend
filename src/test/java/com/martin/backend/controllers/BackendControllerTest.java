@@ -39,6 +39,9 @@ public class BackendControllerTest {
 		BackendController bc = new BackendController();
 		bc.apiKey = "junit_key";
 		bc.apiUrl = "junit_url";
+		bc.URL_PARAM = "&units=imperial";
+		bc.URL_API_KEY_PREFIX = "US&appid=";
+		bc.URL_CONTEXT = "/data/2.5/weather?zip=";
 		bc.repositoryService = repositoryService;
 		bc.restTemplate = restTemplate;
 
@@ -49,7 +52,7 @@ public class BackendControllerTest {
 
 		assertFalse(bc.equals(new BackendController()));
 		when(repositoryService.getZip()).thenReturn("00000");
-		when(restTemplate.exchange(Mockito.eq("junit_url/data/2.5/weather?zip=00000,junit_key&units=imperial"),
+		when(restTemplate.exchange(Mockito.eq("junit_url/data/2.5/weather?zip=00000,US&appid=junit_key&units=imperial"),
 				Mockito.eq(HttpMethod.GET), Mockito.eq(null), Mockito.eq(new ParameterizedTypeReference<String>() {
 				}))).thenReturn(new ResponseEntity<String>("junit_test_body", HttpStatus.OK));
 		String results = bc.getWeatherByZip();
