@@ -70,9 +70,9 @@ public class BackendController {
 				new ParameterizedTypeReference<String>() {
 				});
 		String result = response.getBody();
-		}
 		log.info("Weather API response - {}", result);
 		return result;
+		}
 	}
 
 }
