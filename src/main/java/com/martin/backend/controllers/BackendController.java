@@ -64,7 +64,9 @@ public class BackendController {
             .withTag(DDTags.RESOURCE_NAME, "web.request")
             .start();
 		try (Scope scope = tracer.activateSpan(span)) {
-            span.setTag("Type", "http");
+            span.setTag("DDTags.type", "web");
+            span.setTag("DDTags.Type", "web");
+            span.setTag("DDTags.TYPE", "web");
             span.setTag("owner", "MartinFK");
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, null,
 				new ParameterizedTypeReference<String>() {
