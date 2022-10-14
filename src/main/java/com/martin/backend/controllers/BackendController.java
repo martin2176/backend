@@ -12,6 +12,11 @@ import org.springframework.web.client.RestTemplate;
 import com.martin.backend.service.RepositoryService;
 
 import lombok.extern.slf4j.Slf4j;
+import datadog.trace.api.DDTags;
+import io.opentracing.Scope;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+import io.opentracing.util.GlobalTracer;
 
 @RestController
 @Slf4j
@@ -53,6 +58,11 @@ public class BackendController {
 		final String uri = apiUrl + URL_CONTEXT + zip + "," + URL_API_KEY_PREFIX + apiKey + URL_PARAM;
 		
 		log.info(uri);
+        Tracer tracer = GlobalTracer.get();
+        Span span = tracer.buildSpan("http.request")
+            .withTag(DDTags.SERVICE_NAME, "openweathermap")
+            .withTag(DDTags.RESOURCE_NAME, "/data/?/weather")
+            .start();
 
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, null,
 				new ParameterizedTypeReference<String>() {
