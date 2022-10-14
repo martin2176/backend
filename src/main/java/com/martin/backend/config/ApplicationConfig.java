@@ -47,6 +47,23 @@ public class ApplicationConfig {
 	 */
 	@Bean("apiUrl")
 	public String apiUrl() {
+        Tracer tracer = GlobalTracer.get();
+
+        // Service and resource name tags are required.
+        // You can set them when creating the span:
+        Span span = tracer.buildSpan("http.request")
+            .withTag(DDTags.SERVICE_NAME, "openweathermap")
+            .withTag(DDTags.RESOURCE_NAME, "/data/?/weather")
+            .start();
+        try (Scope scope = tracer.activateSpan(span)) {
+            // Alternatively, set tags after creation
+            span.setTag("my.tag", "value");
+        }
 		return isHttps ? httpsApiUrl : httpApiUrl;
+        finally {
+            // Close span in a finally block
+            span.finish();
+        }
+
 	}
 }
