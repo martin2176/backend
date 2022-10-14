@@ -6,11 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import lombok.Getter;
-import datadog.trace.api.DDTags;
-import io.opentracing.Scope;
-import io.opentracing.Span;
-import io.opentracing.Tracer;
-import io.opentracing.util.GlobalTracer;
+
 
 @Configuration
 public class ApplicationConfig {
@@ -47,23 +43,8 @@ public class ApplicationConfig {
 	 */
 	@Bean("apiUrl")
 	public String apiUrl() {
-        Tracer tracer = GlobalTracer.get();
-
-        // Service and resource name tags are required.
-        // You can set them when creating the span:
-        Span span = tracer.buildSpan("http.request")
-            .withTag(DDTags.SERVICE_NAME, "openweathermap")
-            .withTag(DDTags.RESOURCE_NAME, "/data/?/weather")
-            .start();
-        try (Scope scope = tracer.activateSpan(span)) {
-            // Alternatively, set tags after creation
-            span.setTag("my.tag", "value");
 		return isHttps ? httpsApiUrl : httpApiUrl;
 		}
-        finally {
-            // Close span in a finally block
-            span.finish();
-        }
 
 	}
 }
