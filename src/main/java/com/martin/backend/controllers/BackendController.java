@@ -70,14 +70,10 @@ public class BackendController {
             .withTag(DDTags.RESOURCE_NAME, "/data/?/weather")
             .start();
         try (Scope scope = tracer.activateSpan(span)) {
-            // Alternatively, set tags after creation
-            span.setTag("my.tag", "value");
-
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, null,
 				new ParameterizedTypeReference<String>() {
 				});
-		}
-		finally {
+		} finally {
             // Close span in a finally block
             span.finish();
         }
@@ -86,5 +82,4 @@ public class BackendController {
 		log.info("Weather API response - {}", result);
 		return result;
 	}
-}
 }
