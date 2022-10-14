@@ -59,9 +59,11 @@ public class BackendController {
 		
 		log.info(uri);
         Tracer tracer = GlobalTracer.get();
-        Span span = tracer.buildSpan("http.request")
+        Span span = tracer.buildSpan("call.saas.weatherapi")
             .withTag(DDTags.SERVICE_NAME, "openweathermap")
-            .withTag(DDTags.RESOURCE_NAME, "/data/?/weather")
+            .withTag(DDTags.RESOURCE_NAME, "web.request")
+            .withTag(DDTags.TYPE, "Web")
+            .withTag(DDTags.owner, "MartinFK")
             .start();
 		try (Scope scope = tracer.activateSpan(span)) {
             // Alternatively, set tags after creation
