@@ -13,13 +13,6 @@ import com.martin.backend.service.RepositoryService;
 
 import lombok.extern.slf4j.Slf4j;
 
-import datadog.trace.api.DDTags;
-import io.opentracing.Scope;
-import io.opentracing.Span;
-import io.opentracing.Tracer;
-import io.opentracing.util.GlobalTracer;
-
-
 @RestController
 @Slf4j
 public class BackendController {
@@ -60,26 +53,14 @@ public class BackendController {
 		final String uri = apiUrl + URL_CONTEXT + zip + "," + URL_API_KEY_PREFIX + apiKey + URL_PARAM;
 		
 		log.info(uri);
-		
-		Tracer tracer = GlobalTracer.get();
 
-        // Service and resource name tags are required.
-        // You can set them when creating the span:
-        Span span = tracer.buildSpan("http.request")
-            .withTag(DDTags.SERVICE_NAME, "openweathermap")
-            .withTag(DDTags.RESOURCE_NAME, "/data/?/weather")
-            .start();
-        try (Scope scope = tracer.activateSpan(span)) {
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, null,
 				new ParameterizedTypeReference<String>() {
 				});
+
 		String result = response.getBody();
 		log.info("Weather API response - {}", result);
 		return result;
-		} finally {
-            // Close span in a finally block
-            span.finish();
-        }
-    }
-}
+	}
+
 }
