@@ -68,6 +68,7 @@ public class BackendController {
             span.setTag("DDTags.service.type", "web");
             span.setTag("DDTags.TYPE", "web");
             span.setTag("owner", "MartinFK");
+			span.setTag("span.type","web");
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, null,
 				new ParameterizedTypeReference<String>() {
 				});
