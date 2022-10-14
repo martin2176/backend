@@ -58,8 +58,8 @@ public class ApplicationConfig {
         try (Scope scope = tracer.activateSpan(span)) {
             // Alternatively, set tags after creation
             span.setTag("my.tag", "value");
-        }
 		return isHttps ? httpsApiUrl : httpApiUrl;
+		}
         finally {
             // Close span in a finally block
             span.finish();
