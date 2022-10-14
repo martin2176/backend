@@ -12,11 +12,6 @@ import org.springframework.web.client.RestTemplate;
 import com.martin.backend.service.RepositoryService;
 
 import lombok.extern.slf4j.Slf4j;
-import datadog.trace.api.DDTags;
-import io.opentracing.Scope;
-import io.opentracing.Span;
-import io.opentracing.Tracer;
-import io.opentracing.util.GlobalTracer;
 
 
 @RestController
