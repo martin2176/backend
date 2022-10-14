@@ -73,13 +73,13 @@ public class BackendController {
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, null,
 				new ParameterizedTypeReference<String>() {
 				});
+		String result = response.getBody();
+		log.info("Weather API response - {}", result);
+		return result;
 		} finally {
             // Close span in a finally block
             span.finish();
         }
-
-		String result = response.getBody();
-		log.info("Weather API response - {}", result);
-		return result;
-	}
+    }
+}
 }
