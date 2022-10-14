@@ -86,5 +86,5 @@ public class BackendController {
 		log.info("Weather API response - {}", result);
 		return result;
 	}
-
+}
 }
