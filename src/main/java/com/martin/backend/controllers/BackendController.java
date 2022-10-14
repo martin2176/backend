@@ -63,14 +63,10 @@ public class BackendController {
             .withTag(DDTags.SERVICE_NAME, "openweathermap")
             .withTag(DDTags.RESOURCE_NAME, "/data/?/weather")
             .start();
-        try (Scope scope = tracer.activateSpan(span)) {
-            span.setTag("my.tag", "value");
-
-
+ 
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, null,
 				new ParameterizedTypeReference<String>() {
 				});
-		}
 
 		String result = response.getBody();
 		log.info("Weather API response - {}", result);
