@@ -46,5 +46,4 @@ public class ApplicationConfig {
 		return isHttps ? httpsApiUrl : httpApiUrl;
 		}
 
-	}
 }
